@@ -1,0 +1,184 @@
+<extend name="./Public/Base.html"/>
+<block name='content'> 
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<div class="pageBg">
+                <div class="topM">
+                    <div class="btn-download">
+                        <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.beabox.hjy.tt">立即下载</a>
+                    </div>
+					<p class="closeTop">X</p>
+                    <p class="downloadText">
+                        下载肌肤管家APP<br>
+                        查看更多宝贝
+                    </p>
+                </div>
+            </div>
+
+            <div >
+                <p class="resultText"></p>
+                <p class="orderRNo"></p>
+            </div>
+            <if condition="$show eq 1">
+            <div class="infoText">
+                <p class="hide"></p>
+                <div class="getMoney">
+                    <div class="get_tip center"></div>
+                    <div class="btn-invite center">
+                        <span>邀好友一起来</span>
+                    </div>
+                </div>
+            </div>
+            <else/>
+            <div class="infoText">
+            	<p></p>
+            </div>
+            </if>
+        </div>
+        <div class="topMask"></div>
+        
+        <if condition="$show eq 1">
+        <div class="share_mask hide"></div>
+        <div class="share_text hide"></div>
+        <script>
+            $(".share_mask,.share_text").click(function(){
+                $(".share_mask,.share_text").addClass("hide");
+            })
+            $(".btn-invite").click(function(){
+                $(".share_mask,.share_text").removeClass("hide");
+            });
+			$(".btn-invite").click(function(){
+                $(".share_mask,.share_text").removeClass("hide");
+            });
+        </script>
+        </if>
+		<script type="text/javascript">
+			$(".closeTop").click(function(){
+				$(".topM").css("display","none");
+				$(".topMask").css("display","none");
+			})
+            var cH = document.documentElement.clientHeight;
+			var orderNum = "{$_GET['out_trade_no']}";
+			if(orderNum){
+				var result = 0;
+			}else{
+				var result = 1;
+			}
+            
+            $(function () {
+                $(".layout").height(cH);
+
+                //判断成功失败更换背景
+                result==0?successP():failedP();
+
+            });
+
+            function successP(){
+				//var isweixin = navigator.userAgent.toLowerCase();
+			    //if(isweixin.match(/MicroMessenger/i)=="micromessenger") {
+					//window.location.href = 'SkinRunScheme://';
+			    //}else {
+				   //var ua = navigator.userAgent;
+				   //if(ua.match(/iPhone|iPod|iPad/i) != null){
+					////iphone代码
+					//window.location.href = 'SkinRunScheme://';
+				   //}else{
+					////安卓代码
+					//window.location.href = 'myappskinrun://skinrun/skinrunopen';
+					////window.setTimeout(function () {
+							////window.location.href = '&isrefresh=1' // 附加一个特殊参数，用来标识这次刷新不要再调用myapp:// 了
+					////}, 5000);
+				   //}
+			    //}
+				var susText = '小主，正在为您打包，<br>您可进入肌肤管家App"我的订单"查询快递单号！<br><br>备注：新用户登陆账号为注册手机号码，<br>初始密码：000000。<br>';
+                $(".pageBg").removeClass("payFbg").addClass("paySbg");
+                $(".resultText").html("支付成功");
+                $(".orderRNo").html("订单号为:" + orderNum);
+                $(".infoText p").html(susText);
+            }
+            function failedP(){
+				var susText = '小主，<br>快到肌肤管家App，查看我的订单<br>备注：新用户登陆账号为注册手机号码，<br>初始密码为000000。';
+                $(".pageBg").removeClass("paySbg").addClass("payFbg");
+                $(".resultText").html("支付失败");
+                $(".orderRNo").html("");
+                $(".infoText p").html(susText);
+            }
+        </script>
+        <if condition="$show eq 1">
+        <script type="text/javascript">
+
+			wx.config({
+				appId: '{$ticket[appid]}', // 必填，公众号的唯一标识
+				timestamp: {$ticket[timestamp]}, // 必填，生成签名的时间戳
+				nonceStr: '{$ticket[noncestr]}', // 必填，生成签名的随机串
+				signature: '{$ticket[signature]}',// 必填，签名，见附录1
+				jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+			});
+			
+			wx.ready(function () {
+				wx.onMenuShareTimeline({
+					title: '肌肤管家0元购，天使会员招募', // 分享标题
+					link: 'http://w1.skinrun.me/zeroyuan', // 分享链接
+					imgUrl: 'http://shop.skinrun.me/Public/imgs/wxshare.png', // 分享图标
+					success: function () { 
+						// 用户确认分享后执行的回调函数
+						return false;
+					},
+					cancel: function () { 
+						// 用户取消分享后执行的回调函数
+					}
+				});
+		
+				wx.onMenuShareAppMessage({
+					title: '肌肤管家0元购，天使会员招募', // 分享标题
+					desc: '我竟然免费拿到了【肌肤管家智能测肤仪】，仅限1000 名，手慢无!', // 分享描述
+					link: 'http://w1.skinrun.me/zeroyuan', // 分享链接
+					imgUrl: 'http://shop.skinrun.me/Public/imgs/wxshare.png', // 分享图标
+					type: '', // 分享类型,music、video或link，不填默认为link
+					dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+					success: function () { 
+						// 用户确认分享后执行的回调函数
+						return false;
+					},
+					cancel: function () { 
+						// 用户取消分享后执行的回调函数
+					}
+				});
+		
+				wx.onMenuShareQQ({
+					title: '肌肤管家0元购，天使会员招募', // 分享标题
+					desc: '我竟然免费拿到了【肌肤管家智能测肤仪】，仅限1000 名，手慢无!', // 分享描述
+					link: 'http://w1.skinrun.me/zeroyuan', // 分享链接
+					imgUrl: 'http://shop.skinrun.me/Public/imgs/wxshare.png', // 分享图标
+					success: function () { 
+					   // 用户确认分享后执行的回调函数
+					  return false;
+					},
+					cancel: function () { 
+					   // 用户取消分享后执行的回调函数
+					}
+				});
+		
+				wx.onMenuShareWeibo({
+					title: '肌肤管家0元购，天使会员招募', // 分享标题
+					desc: '我竟然免费拿到了【肌肤管家智能测肤仪】，仅限1000 名，手慢无!', // 分享描述
+					link: 'http://w1.skinrun.me/zeroyuan', // 分享链接
+					imgUrl: 'http://shop.skinrun.me/Public/imgs/wxshare.png', // 分享图标
+					success: function () { 
+					   // 用户确认分享后执行的回调函数
+					   return false;
+					},
+					cancel: function () { 
+						// 用户取消分享后执行的回调函数
+					}
+				});
+		
+			  });
+		
+		</script>
+		</if>
+		<style>
+            .layout {
+                height: auto;
+            }
+        </style>
+</block>

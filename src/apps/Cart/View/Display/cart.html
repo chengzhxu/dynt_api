@@ -1,0 +1,61 @@
+<extend name="./Public/Base.html"/>
+<block name='content'> 
+    <script src="__PUBLIC__/js/func.js" type="text/javascript"  rel="stylesheet"></script>
+        <ul class="cartList">
+
+        </ul>
+
+        <div class="btn-buy container" style="padding: 0;">
+            <div class="btn-shouldPay col-xs-7">
+                <div class="shouldP">
+                    <!--<span class="payText">应付:</span>
+                    <span class="tolCostS">¥</span>
+                    <span class="tolCost"></span>-->
+                </div>
+                <div class="saveM">
+                    <!--<span class="saveText">节省:</span>
+                    <span class="saveCostS">¥</span>
+                    <span class="saveCost"></span>-->
+                </div>
+            </div>
+            <div class="btn-buyNow col-xs-5">
+                结算
+            </div>
+        </div>
+		 
+    
+
+    <script>
+        var empty = 1;
+        func.getCartList();
+        var d = true;
+        
+        //结算
+        $(".btn-buyNow").click(function(){
+            var uid = parseInt("{:session('uid')}");
+            if(uid){
+				var url = "{:U('display/onlinepay')}";
+                location.href=url;
+            }else{
+                show_login();
+            }
+        });
+        
+    </script>
+    
+    <style>
+        .selectedPro{
+            width: 202px;
+            height: 202px;
+            background-size: cover;
+            display: inline-block;
+            float: left;
+            margin-left: 2.2em;
+            border: #e6e6e6 solid 1px;
+        }
+    </style>
+	<div class="spinner">
+		<div class="dot1"></div>
+		<div class="dot2"></div>
+	</div>
+</block>

@@ -1,0 +1,25 @@
+<extend name="./Public/Base.html"/>
+	<block name='content'>
+        <div class="listFrame center">
+            <ul class="ticketUl"></ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/js/func.js"></script>
+    <script>
+    	var packet_id = {:I('get.packet_id',0,'intval')};
+    	var backid = {:I('get.backid',0,'intval')};
+    	
+        var ch = document.documentElement.clientHeight;
+        $(".layout").css({"min-height":ch});
+        $("body").css({"background-color":"#f2f2f2"});
+        $(".ticketList:first-child").addClass("liSelected");
+        $(".ticketList:first-child .vNum").css({color:"#fff","border-color":"#fff"});
+        func.getPackets();
+		function selectPacket(id){
+			var url = '/cart/display/onlinepay?backid='+backid+'&packet_id='+id;
+            window.location.href = url;
+            return false;
+		};
+    </script>
+</block>
+

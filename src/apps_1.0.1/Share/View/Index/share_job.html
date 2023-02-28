@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="white">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/Public/share/css/basic.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/share/css/style.css" />
+		<link rel="stylesheet" href="/Public/share/css/xiugai.css" />
+                <script src="/Public/share/js/down_app.js"></script>
+                <script src="/Public/share/js/work.js"></script>
+                <script type="text/javascript" src="/Public/js/jquery-1.9.1.min.js"></script>
+</head>
+	<body>
+		<div id="workdetailII">
+		<section id="head" class="head grid fix bg-bcolor border-bottom">
+		    <div class="head-contin padding15e text-center">
+		        <!--<a class="btna-img back-icon mui-action-back "></a>-->
+		          <h5 class="text-center cos-1">
+		                鸟友求职
+		          </h5> 
+		    </div>
+		</section>
+
+		<section  id="scroll1" class="jt-work-wrapper ">
+			<div class="worke-icon-tip pr" id="nt_tip">
+				<p style="padding-right: 20px;">如果您在沟通过程中遇到对方收费行为，则存在诈骗风险，请您提高警惕！</p>
+				<q class="worke-closed" onclick="closed_tip()"></q>
+			</div>
+			<div class="jt-work-bar bgfff magrinB15">
+				<div class=" grid text-left magrinB10">
+					 <h2 class="cos-4 text-left" >
+					 	<span class="color-3 font16">{$result.position_name}</span>
+					 </h2>
+					 <span class="color-green cos-1 text-right font16">{$result.salary}</span>
+			 
+				</div>
+				<div class=" grid text-left  color9  font12 ">
+					 <p class="cos-4 text-left">{$result.job_status}</p>
+					 <span class=" cos-1 text-right">{$result.dateline}</span>
+			 
+				</div>				
+			</div>
+			<div class="jt-work-bar bgfff magrinB15">
+				<div class=" text-left">
+					 <h1 class="border-bottom">基本资料</h1>
+					 <div class="jt-work-listyq grid">
+					 		<p class="cos-1 text-left"><span class="color9">要求地点：</span>
+					 			<em class="color-3">{$result.address}</em>
+					 		</p>
+					 		<p class="cos-1 text-left"><span class="color9">我的学历：</span>
+					 			<em class="color-3">{$result.education}</em>
+					 		</p>
+					 </div>
+ 					<div class="jt-work-listyq grid">
+					 		<p class="cos-1 text-left"><span class="color9">工作经验：</span>
+					 			<em class="color-3">{$result.experience}</em>
+					 		</p>
+					 		<p class="cos-1 text-left"><span class="color9">我的年龄：</span>
+					 			<em class="color-3">{$result.age}</em>
+					 		</p>
+					 </div>
+ 					<div class="jt-work-listyq grid">
+					 		<p class="cos-1 text-left"><span class="color9">我的性别：</span>
+					 			<em class="color-3" >{$result.gender}</em></p>
+					 </div>					 
+				</div>
+							
+			</div>
+			<div class="jt-work-bar bgfff magrinB15">
+				<div class=" text-left">
+					 <h1 class="border-bottom">其它描述</h1>
+					 <div class="jt-work-listyq grid">
+					 		<ul>
+                                                            {$result.introduce}
+					 		</ul>
+					 </div>
+ 									 
+				</div>							
+			</div>			
+		</section>
+
+		 <!-- load -->
+      	<div class="jt-load-bottom ">
+      		<div class="jt-load-div grid">
+      			<span></span>
+      			<div class="col">
+	      			<h4>丹阳人的APP</h4>
+	      			<p><em>看动态</em><em>找工作</em></p>       				
+      			</div>
+   			
+      		</div>
+      		<a class="bg-bcolor" style="cursor:pointer" onclick='down_app()'>去下载</a>
+      		
+      	</div>
+        </div>
+        <!-- 评价-->
+
+	</body>
+</html>

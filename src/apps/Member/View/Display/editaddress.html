@@ -1,0 +1,228 @@
+<extend name="./Public/Base.html"/>
+<block name='content'> 
+<script src="__PUBLIC__/js/mobiscroll.core-2.6.2.js" type="text/javascript"  rel="stylesheet"></script>
+<link href="__PUBLIC__/css/mobiscroll.core-2.6.2.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/js/mobiscroll.list-2.6.2.js" type="text/javascript"  rel="stylesheet"></script>
+<script src="__PUBLIC__/js/address.js" type="text/javascript"  rel="stylesheet"></script>
+<style>
+	.layout{
+		background-color: #f2f2f2;
+	}
+</style>
+            <div class="sjyz-form">
+                    <ul>
+                        <li>
+                            <input type="text" class="text" placeholder="请输入收货人姓名" name="username" id="username" value=""/>
+                        </li>
+                        <li >
+                            <div class="inputThread"></div>
+                            <input type="text" class="text" placeholder="请输入手机号码" name="mobile" id="mobile" value=""/>
+                        </li>
+                        <li id="areaS">
+                            <div class="inputThread"></div>
+                            <input type="text" class="text" placeholder="省，市，区" name="" id="areaInput" value="" readonly required/>
+                        </li>
+                        <li style="height: 15em">
+                            <div class="inputThread"></div>
+                            <!--<input type="text" class="text detailAdd" placeholder="详细地址" name="" id="" value=""/>-->
+                            <textarea class="text detailAdd" placeholder="详细地址" name="street" id="street"></textarea>
+                        </li>
+                    </ul>
+                    <button class="submit"/>保存</button>
+            </div>
+        </div>
+
+        <div class="areaList hide" >
+            <!--滑块设定-->
+            <div class="confirm text-right">
+                <button type="submit" id="areaSelect">完成</button>
+            </div>
+            <div class="detailList text-center">
+                <div class="content">
+                    <div style="display: none">
+                        <label for="theme">Theme</label>
+                        <select name="theme" id="theme" class="changes">
+                            <option value="default">Default</option>
+                        </select>
+                    </div>
+                    <div style="display: none">
+                        <label for="mode">Mode</label>
+                        <select name="mode" id="mode" class="changes">
+                            <option value="scroller">Scroller</option>
+                        </select>
+                    </div>
+                    <div style="display: none">
+                        <label for="display">Display</label>
+                        <select name="display" id="display" class="changes">
+                            <option value="inline">Inline</option>
+                        </select>
+                    </div>
+                    <div style="display: none">
+                        <label for="language">Language</label>
+                        <select name="language" id="language" class="changes">
+                            <option value="zh">Chinese</option>
+                            <!--Lang-->
+                        </select>
+                    </div>
+                    <div style="display: none">
+                        <label for="demo">Demo</label>
+                        <select name="demo" id="demo" class="changes">
+                            <option value="tree_list" >Tree List</option>
+                            <!--Demos-->
+                        </select>
+                    </div>
+
+                    <!--滑轮列表-->
+                    <div data-role="fieldcontain" class="demos fieldcontain" id="demo_tree_list" >
+                        <label for="test_tree_list_dummy"></label>
+                        <ul id="test_tree_list">
+                            
+                        </ul>
+                    </div>
+
+                    <!--Html-->
+                </div>
+            </div>
+        </div>
+        <div class="myMask"></div>
+<script type="text/javascript">
+
+var id = {$_GET['id']};
+var fArea = '';
+var sArea = '';
+var tArea = '';
+var tAreaValue = '';
+$.post("{:U('Index/getoneaddress')}",{id:id},function(result){
+	if(result){
+		$('#username').val(result['data']['username']);
+		$('#mobile').val(result['data']['mobile']);
+		$('#street').val(result['data']['street']);
+		$('#areaInput').val(result['data']['province']+result['data']['city']+result['data']['area']);
+                fArea = result['data']['province'];
+                sArea = result['data']['city'];
+                tArea = result['data']['area'];
+                tAreaValue = result['data']['region'];
+	}else{
+		alert('添加失败')
+	}
+})
+var json = JSON.parse(addressJson);
+var text='';
+text+= address();
+$("#test_tree_list").html(text);
+function getJsonObjLength(jsonObj) {
+		var Length = 0;
+		for (var item in jsonObj) {
+			Length++;
+		}
+		return Length;
+}
+function address(){
+	for (var i = 0; i < getJsonObjLength(json); i++){
+	var provincename=json[i][0][1];//provincename
+	var city=json[i]['city'];
+	text+='<li class="province cityName c'+i+'"><p id="provinces" style="overflow:hidden;text-overflow:ellipsis; -o-text-overflow:ellipsis;white-space:nowrap;width:100%;">'+provincename+'</p><ul>';
+		for (var j = 0; j < getJsonObjLength(city); j++) {
+			var cityname=city[j][0];
+			var areaname=city[j]['area'];
+			text+='<li><span id="citys" style="overflow:hidden;text-overflow:ellipsis; -o-text-overflow:ellipsis;white-space:nowrap;width:100%;">'+cityname[1]+'</span><ul>';
+			for(var q=0;q<areaname.length;q++){
+				text+='<li id="areas" value="'+areaname[q][0]+'" style="overflow:hidden;text-overflow:ellipsis; -o-text-overflow:ellipsis;white-space:nowrap;width:100%;">'+areaname[q][1]+'</li>';
+			}
+			text+='</ul></li>';
+		}
+		text+='</ul>';
+	}
+	return text;
+}
+	var cH = document.documentElement.clientHeight;
+	
+	$(function () {
+		$(".layout").css("min-height",cH);
+		
+		$(".btn-sRight").click(function(){
+			confirm("ok");
+		});
+		
+//                省市区控制JS
+		var opt = {
+		};
+		opt.tree_list = {
+			preset : 'list',
+//                    labels: ['Region', 'Country', 'City','Town']
+			labels: [' ', ' ', ' ',' ']
+		};
+		<!--Script-->
+		$('select.changes').bind('change', function() {
+			var demo = $('#demo').val();
+			$(".demos").hide();
+			if (!($("#demo_"+demo).length))
+				demo = 'default';
+
+			$("#demo_" + demo).show();
+			$('#test_'+demo).val('').scroller('destroy').scroller($.extend(opt[$('#demo').val()], { theme: $('#theme').val(), mode: $('#mode').val(), display: $('#display').val(), lang: $('#language').val() }));
+		});
+		$('#demo').trigger('change');
+
+		$("#areaS").click(function(){
+			$(".myMask").css("display","block");
+			$(".areaList").removeClass("hide");
+		});
+		$(".myMask").click(function(){
+			$(".myMask").css("display","none");
+			$(".areaList").addClass("hide");
+		});
+		$("#areaSelect").click(function(){
+
+			var listNum = $("#test_tree_list_dummy").val();
+			var listNumArray = $("#test_tree_list_dummy").val().split(" ");
+			var x = listNumArray[0];
+			var y = listNumArray[1];
+			var z = listNumArray[2];
+
+			if( listNum == 0 ){
+				$("#areaInput").val("北京市 北京 东城区");
+				$(".myMask").css("display","none");
+				$(".areaList").addClass("hide");
+                                fArea = "北京市";
+                                sArea = "北京";
+                                tArea = "东城区";
+                                tAreaValue = "110101";
+			}else{
+				 fArea = $(".cityName p").eq(x).html();
+				 sArea = $(".c" + x + " " + "span").eq(y).html();
+				 tArea = $(".c" + x + " li " + "li").eq(z).html();
+				 tAreaValue = $(".c" + x + " li " + "li").eq(z).attr('value');
+				listNum = fArea + " " + sArea + " " + tArea;
+				$(".myMask").css("display","none");
+				$(".areaList").addClass("hide");
+				$("#areaInput").val(listNum);
+			}
+		});
+		$(".submit").click(function(){
+			var username = $('#username').val();
+			var mobile = $('#mobile').val();
+			var street = $('#street').val();
+			if(username == ''){
+				alert('收件人名称不能为空');
+			}else if(mobile == ''){
+				alert('收件人电话不能为空');
+			}else if(street == ''){
+				alert('详细地址不能为空');
+			}else if(mobile.length != 11){
+				alert('手机号码格式不正确');
+			}else{
+				$.post("{:U('Index/address')}",{id:id,username:username,mobile:mobile,street:street,province:fArea,city:sArea,area:tArea,region:tAreaValue},function(result){
+					if(result){
+						var url = "{:U('Display/address')}";
+						window.location.href=url;
+					}else{
+						alert('添加失败');
+					}
+				})
+			}
+		});
+	});
+</script>
+</block>
+

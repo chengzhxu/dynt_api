@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=750,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telephone=no">
+    <title>申请提现</title>
+    <link rel="stylesheet" href="__STATIC__/Withdrawals/css/applym.css">
+
+</head>
+
+<body>
+    <div class="am_layout">
+        <div class="am_frame center">
+            <ul class="amv_Ul">
+                <li class="am_enable">
+                    <div class="tValue">
+                        <p class="vNum">￥<span>{$money.credit3}</span></p>
+                    </div>
+                </li>
+                <li class="am_disable">
+                    <div class="tValue">
+                        <p class="vNum">￥<span>{$money.credit4}</span></p>
+                        <p>满100可提</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="am_rule">
+            <h3>天使会员完成测试任务即可成功提现</h3>
+            <ul class="center">
+                <li><p>在“我的化妆包”中添加 4 款护肤品。</p></li>
+                <li><p>一周内有四天使用肌肤管家测肤仪,对化妆包的产品进行测试。</p></li>
+                <li><p>申请余额提现后,1-3 个工作日到账。</p></li>
+            </ul>
+        </div>
+        <a href="/member/withdrawals/cash?{$query}">
+            <div class="am_btn_confirm">
+                <p>完成并申请</p>
+            </div>
+        </a>
+    </div>
+
+    <script src="__STATIC__/Withdrawals/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/Withdrawals/js/ios.js"></script>
+    <script>
+        $(".am_layout").height(document.documentElement.clientHeight);
+    </script>
+</body>
+</html>
+

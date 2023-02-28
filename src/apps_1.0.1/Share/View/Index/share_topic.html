@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="white">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/Public/share/css/basic.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/share/css/style.css" />
+                <link rel="stylesheet" type="text/css" href="/Public/share/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/share/css/xiugai.css" />
+                <script src="/Public/share/js/down_app.js"></script>
+                <script src="/Public/share/js/topic.js"></script>
+		<script src="http://static.runoob.com/assets/vue/1.0.11/vue.min.js"></script>
+		<script src="/Public/share/js/mui.min.js"></script>
+                <script src="/Public/share/js/mui.previewimage.js"></script>
+                <script src="/Public/share/js/mui.zoom.js"></script>
+		<script src="../../js/zepto.min.js"></script>
+		<script src="../../js/layer.js"></script>
+		<script src="../../js/h.js"></script>
+
+	</head>
+	<body>
+		<div id="detail">
+		<div class="detail-text bgff">
+                    <p class="titlefont">{$result.topic.content}</p>
+            <ul class="detail-img clearfix "  >
+                <volist name="result.topic.detail_arr" id="vo">
+                    <li class="col">
+                        <a href="javascript:void(0);">
+                            <img class="imgs" style="height: auto;" data-preview-src="{$vo.small_thumb}" data-preview-group="1" src="{$vo.small_thumb}">        			
+                        </a>
+                    </li>     
+                </volist>
+            </ul>
+           	<div class="topic-bar">
+           		<em class="color9" v-html="message.topic.dateline">{$result.topic.dateline}</em>&nbsp;&nbsp;&nbsp;&nbsp;
+           		<!--<a href="##"  class="color-green">删除</a>-->
+           	</div>
+
+        <section class="detail-pj bg-bcolor">
+	        <div class="detail-pj-box padding15e">
+	            <div class="text-center" style="padding: 20px 0;">
+	        		<p class=" font14 pltitle" style="color: #333; line-height: 14px;">鸟友评论</p>
+	            	 <p class="font14 numbers" style=" line-height: 14px;" v-html="message.comment_count">/ - {$result.comment_count}条 - /</p>
+                    </div>
+                    <volist name="result.comment_list" id="vo">
+                        <div class="detail-pj-con grid bg-bcolor">
+                            <div class="detail-logo">
+                                 <img src="{$vo.from_headimg}">
+                            </div>
+                            <div class="detail-pjn cos-1 text-left">
+                                <div class="user-name color9">
+                                    <h5 class="username">{$vo.from_nick}</h5>
+                                    <p class="time"><em>{$vo.dateline}</em></p>
+                                </div>
+                                <div class="detail-pj-text">
+                                    <p class="pl">{$vo.content}</p>
+                                </div>
+                                <volist name="vo.reply" id="rp">
+                                    <div class="detail-pj-mes">
+                                        <a class="username">{$rp.from_nick}</a><span class="huifu">回复</span><a class="username">{$rp.to_nick}</a>
+                                        <span>{$rp.content}</span>
+                                    </div>
+                                </volist>
+                            </div>
+                        </div>
+                    </volist>
+	        </div>
+       </section>
+    
+      
+        </div>
+      	<!-- load -->
+      	<div class="jt-load-bottom ">
+      		<div class="jt-load-div grid">
+      			<span></span>
+      			<div class="col">
+	      			<h4>丹阳人的APP</h4>
+	      			<p><em>看动态</em><em>找工作</em></p>       				
+      			</div>
+   			
+      		</div>
+      		<a class="bg-bcolor" style="cursor:pointer" onclick='down_app()'>去下载</a>
+      		
+      	</div>
+        </div>
+        <!-- 评价-->
+        
+	<script src="/Public/share/js/zepto.min.js"></script>
+	<script type="text/javascript"  src="/Public/share/js/mui.zoom.js" charset="utf-8"></script>
+        <script type="text/javascript"  src="/Public/share/js/mui.previewimage.js" charset="utf-8"></script>
+		<script>
+			var width=Math.floor(($(window).width()-50)/3);
+			var height=Math.floor(width*3/4);
+			$('.detail-img li').css({'width':width+'px','height':height+'px'});
+			mui.init();
+        	mui.previewImage();
+			
+		</script>
+	</body>
+</html>

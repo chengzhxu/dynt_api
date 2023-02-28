@@ -1,0 +1,131 @@
+<extend name="./Public/Base.html"/>
+<block name='content'> 
+<style>
+	.layout{
+		background-color: #f2f2f2;
+	}
+</style>
+       <ul class="addUl">
+		</ul>
+		<div class="btn-bottom">
+			<div class="btn-newAdd">添加新地址</div>
+		</div>     
+<script type="text/javascript">
+var lH = $(".layout").height();
+var cH = document.documentElement.clientHeight;
+if(lH<cH){
+	$(".btn-bottom").css("position","absolute")
+}else if(lH>=cH){
+	$(".btn-bottom").css({"position":"relative","bottom":"0"})
+}
+	var user ;
+	var tel =new Array(); 
+	var add = new Array(); 
+	var username = new Array();
+	var addressid = new Array();
+	var isdefault = new Array();
+	var addList =  $(".addUl").html();
+    addList = "<div></div>";
+	$.post("{:U('Index/getaddress')}",'',function(result){
+            
+            if(result['code'] == '437'){
+                alert('请登录');
+            }else{
+				var data = result['data'];
+                for(var i = 0; i < data.length; i++){
+					tel.push(data[i].mobile);
+					add.push(data[i].full_address);
+					username.push(data[i].username);
+					addressid.push(data[i].id);
+					isdefault.push(data[i].is_default);
+                   
+                }
+				
+				user = {
+					"name":username,
+					"tel":tel,
+					"add":add,
+					"addressid":addressid,
+					"isdefault":isdefault
+				};
+				
+				writeDetail("{:I('get.openid','','strval')}");
+				writeCss();
+				//修改收货地址
+				$(".btn-modify").click(function(){
+					id = $(this).parent().siblings().children(".address").val();
+					window.location.href = "/Member/Display/editaddress?id=" + id;
+				});
+				//删除收货地址
+				$(".btn-delete").click(function(){
+					if(confirm('确定要删除吗')){
+						id = $(this).parent().siblings().children(".address").val();
+						$(this).parent().parent().remove();
+						$.post("{:U('Index/deladdress')}",{id:id},function(result){
+							if(result){
+								$(this).parent().parent().remove();
+							}else{
+								alert('删除失败')
+							}
+						})
+					}
+				});
+				//新增收货地址
+				$(".btn-newAdd").click(function(){
+					var url = "{:U('Display/addaddress')}";
+					window.location.href=url;
+				});
+
+				$(".defaultAdd").html("(默认)");
+				if($('#isdefault0').val() == 1){
+					 $("#add0+ span").css("visibility","visible");
+				}
+               
+                $(".btn-default").html("设为默认").click(function(){
+					var id = $(this).parent().siblings().children(".address").val();
+					
+					$.post("{:U('Index/defaultaddress')}",{id:id},function(result){
+						if(result['code'] == 200){
+							
+						}
+					})
+					$(".btn-default").css("visibility","visible");
+                    $(this).css("visibility","hidden")
+                    $(".defaultAdd").css("visibility","hidden");
+                    $(this).parent().siblings().children(".defaultAdd").css("visibility","visible")
+                });
+				
+				
+			}
+
+        });
+		
+
+</script>
+
+<script type="text/javascript">
+	//var user = {
+		//name:["马新新","新马马","马新马"],
+		//tel:["136768888881","136768999991","136768000001",],
+		//add:["上海市徐汇区镇新街道九宫山路8277弄89号鸟叔公寓17栋13号-19号709室201",
+			//"上海市徐汇区镇新街道九宫山路8277弄89号鸟叔公寓17栋13号-19号709室202",
+			//"上海市徐汇区镇新街道九宫山路8277弄89号鸟叔公寓17栋13号-19号709室203",]
+	//};
+
+	//$(function () {
+		//$(".btn-modify").click(function(){
+			//confirm($(this).parent().siblings(".addDetail").html());
+		//});
+		//$(".btn-delete").click(function(){
+			//confirm($(this).parent().siblings(".addDetail").html());
+		//});
+		//$(".btn-newAdd").click(function(){
+			//confirm("ok");
+		//});
+		//$(".btn-back").click(function(){
+			//confirm("ok");
+		//});
+	//});
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/writeHtml.js"></script>
+</block>

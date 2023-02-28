@@ -1,0 +1,225 @@
+<extend name="./Public/Base.html"/>
+<block name='content'> 
+            <div class="addInfo">
+                <div  class="addTit"><p>&nbsp;&nbsp;收货信息</p></div>
+                <div class="addShow">
+                    <div class="addressList">
+                       <div class="addRPart">
+                        <!--JS写入-->
+                       </div>
+                       <div class="rightIcon"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="extraInfo">
+                <span class="extraText">备注:</span>
+                <div class="extraInput" contenteditable="true" id="remark"><br /></div>
+            </div>
+
+
+            <div class="cartList" style="margin-top: 40px">
+                <div  class="addTit aTColor">
+                    <p>&nbsp;&nbsp;产品信息</p>
+                    <div class="sOrHList"></div>
+                </div>
+                
+               <ul class="cListUl">
+                   <!--JS写入-->
+               </ul>
+            </div>
+			<!-- 红包 -->
+			<div class="tRecommend">
+                <div class="rTit"><h3>最省钱红包推荐</h3></div>
+                <div class="ticketRD">
+                </div>
+            </div>
+            
+            <div class="payList">
+                <div class="addTit pTColor">
+                    <p>&nbsp;&nbsp;支付信息</p>
+                </div>
+                <ul class="payLDetail">
+				<if condition="is_weixin()">
+                    <li class="pDList" value="wx_pub">
+                        <div class="wIcon"></div>
+                        <p>微信支付</p>
+                        <div class="selectedRG" value="wx_pub" id="webpay"></div>
+                    </li>
+					<li class="pDList" value="alipay_wap">
+                        <div class="zIcon"></div>
+                        <p>支付宝支付</p>
+                        <div class="selectedRG hide"></div>
+                    </li>
+				<else/>
+					<li class="pDList" value="wx_pub">
+                        <div class="wIcon"></div>
+                        <p>微信支付</p>
+                        <div class="selectedRG hide"></div>
+                    </li>
+					<li class="pDList" value="alipay_wap">
+                        <div class="zIcon"></div>
+                        <p>支付宝支付</p>
+                        <div class="selectedRG" value="alipay_wap" id="webpay"></div>
+                    </li>
+				</if>
+                    
+                </ul>
+            </div>
+
+            <div class="btn-buy container" style="padding: 0;">
+                <div class="btn-shouldPay col-xs-7">
+                    <div class="shouldP">
+                        <span class="payText">应付:</span>
+                        <span class="tolCostS">¥</span>
+                        <span class="tolCost"></span>
+                    </div>
+                    <div class="saveM">
+                        <span class="saveText">节省:</span>
+                        <span class="saveCostS">¥</span>
+                        <span class="saveCost"></span>
+                    </div>
+                </div>
+                <div class="btn-buyNow col-xs-5">
+                    支付
+                </div>
+            </div>
+        </div>
+
+
+        <div class="addressListS">
+                <ul class="addRPartSList">
+                    <!--JS写入-->
+                </ul>
+            </div>
+        <div class="myMask"></div>
+		<script src="__PUBLIC__/js/pingpp.js" type="text/javascript"></script>
+		<script src="__PUBLIC__/js/ap.js" type="text/javascript"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/func.js"></script>
+		 <script>
+            //定义获取用户及产品对象
+			var sCartList =  $(".cListUl").html();
+			var	sCartList = "<div></div>";
+
+			var sAddList =  $(".addRPartSList").html();
+			var	sAddList = "<div></div>";
+			var selectedAdd ;
+			var tel =new Array(); 
+			var add = new Array(); 
+			var username = new Array();
+			var addressid = new Array();
+			var cartArray = new Array();
+			var pName = new Array();
+			var pPriceNow = new Array();
+			var pPriceOriginal = new Array();
+			var pCount = new Array();
+			var img = new Array();
+			var cartList = new Array();
+			var payArray = new Array();
+			var marketMoney = 0;
+			var realMoney =0;
+			var cH = document.documentElement.clientHeight;
+            var tolCost = 1669;
+            var saveCost = 169;
+			var channel = $("#webpay").attr("value");
+			var openid  = "{$openid}";
+			var packet_id = {:I('get.packet_id',0,'intval')};
+			var newpackid = 0;
+			var packet_money = 0;
+			var payMoney = 0;
+			//收货地址模块
+			var backid = {:I('get.id',0,'intval')};
+			pay.getAddress(backid);
+			
+			//购物车模块
+			pay.getCartList();
+
+			//产品信息显示隐藏
+			$(".sOrHList").click(function() {
+
+			   if( !$(".cListUl").hasClass("hide")){
+				   $(".cListUl").addClass("hide");
+				   $(".orderNo").addClass("hide");
+				   $(this).addClass("rotate180");
+			   }else if($(".cListUl").hasClass("hide")){
+				   $(".cListUl").removeClass("hide");
+				   $(".orderNo").removeClass("hide");
+				   $(this).removeClass("rotate180");
+			   }
+			});
+
+			$(".addRPart").click(function(){
+				var url = '/Member/Display/address?packet_id='+ packet_id;
+				window.location.href = url;
+			});
+
+			//选择支付方式，默认微信
+			var payForm = "wx";
+			$(".pDList").click(function(){
+			   $(".selectedRG").addClass("hide");
+				$(this).children(".selectedRG").removeClass("hide");
+				channel = $(this).attr("value");
+				
+			}); 
+			$(".btn-buyNow").click(function(){
+				pay.btnbuyNow();
+			});
+			
+			$(".myMask").click(function(){
+				$(this).css("display","none");
+				$(".addressListS").css("display","none");
+			});
+	        function packet(obj) {
+	        	var totalMoney = fomatFloat($('.tolCost').html(),2);
+	        	var total = 0;
+	        	if($(obj).hasClass("notS")){
+		        	packet_id = newpackid;
+		        	newpackid = 0;
+		        	if(packet_money > payMoney)
+		        		total = 0;
+		        	else
+		        		total = fomatFloat(totalMoney - packet_money , 2);
+		        	$('.tolCost').html(total);
+		        	$(obj).removeClass("notS");
+		        }else{
+		        	newpackid = packet_id;
+		        	packet_id = 0;
+		        	total = fomatFloat(payMoney , 2);
+		        	$('.tolCost').html(total);
+		        	$(obj).addClass("notS");
+		        }
+	        }
+        </script>
+
+        <style>
+            .layout{
+                background-color: #f2f2f2;
+            }
+            .btn-buy{
+                padding: 0;
+                position: static;
+                margin-top: 2em;;
+            }
+			.noaddress{
+				text-align:center;
+				line-height:157px;
+				vertical-align:middle;
+				font-size:3em;
+			}
+            #cList0 .cDLeft{top:0;}
+            .selectedPro{
+                width: 202px;
+                height: 202px;
+                background-size: cover;
+                display: inline-block;
+                float: left;
+                margin-left: 2.2em;
+                border: #e6e6e6 solid 1px;
+            }
+        </style>
+	<div class="spinner">
+		<div class="dot1"></div>
+		<div class="dot2"></div>
+	</div>
+	<div class="myMask"></div>
+</block>
+

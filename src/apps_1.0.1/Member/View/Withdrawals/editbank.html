@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=750,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telephone=no">
+    <title>修改银行卡</title>
+    <link rel="stylesheet" href="__STATIC__/Withdrawals/css/applym.css">
+
+</head>
+
+<body>
+    <div class="am_layout">
+        <div class="am_bank_input">
+                <ul>
+                    <li id="user" class="center">
+                        <div><h3>持卡人</h3></div>
+                        <input type="text" class="text" placeholder="请输入持卡人姓名" name="realname" id="userInput" value="{$banks.realname}"  required/>
+                    </li>
+                    <li id="bank" class="center">
+                        <div><h3>银行</h3></div>
+                        <input type="text" class="text" placeholder="银行类型" name="bankname" id="bankInput" value="{$banks.bankname}" required/>
+
+                    </li>
+                    <li id="card" class="center">
+                        <div><h3>卡号</h3></div>
+                        <input type="text" class="text" placeholder="银行卡号" name="cartnumber" id="cardInput" value="{$banks.cartnumber}" required/>
+                    </li>
+                </ul>
+                <button class="bank_btn"/><p>确认</p></button>
+                <!--js控制成功提示-->
+        </div>
+        <div class="mask hide"></div>
+        <div class="bank_tip hide">
+            <div class="bank_tip_window center">
+                <div class="tip_top">
+                    <div class="tip-close"><p>x</p></div>
+                    <div class="tip_text">
+                        <h3>温馨提示</h3>
+                        <p class="center" id="msg"></p>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="tip_confirm">
+                        <p>确定</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="__STATIC__/Withdrawals/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/Withdrawals/js/ios.js"></script>
+    <script>
+        $(".am_layout").height(document.documentElement.clientHeight);
+
+//        隐藏弹窗
+        $(".mask,.tip-close,.tip_confirm").click(function(){
+            $(".mask").hide();
+            $(".bank_tip").hide();
+        });
+        
+        $(".bank_btn").click(function(){
+        	var realname = $("#userInput").val();
+        	var bankname = $("#bankInput").val();
+        	var cartnumber = $("#cardInput").val();
+			var bankid = {$banks.id};
+        	
+        	if(realname == "") {
+        		$("#msg").html("请输入开户的姓名");
+        		$(".bank_tip").show();
+        		$(".mask").show();
+        		return false;
+        	}
+        	if(bankname == "") {
+        		$("#msg").html("请输入开户的银行");
+        		$(".bank_tip").show();
+        		$(".mask").show();
+        		return false;
+        	}
+        	if(cartnumber == "") {
+        		$("#msg").html("请输入开户的卡号");
+        		$(".bank_tip").show();
+        		$(".mask").show();
+        		return false;
+        	}
+        	
+        	$.ajax({
+        		type   : 'post',
+        		data   : 'realname='+ realname + '&bankname=' + bankname + '&cartnumber='+ cartnumber+'&bankid='+bankid,
+        		url    : '/member/withdrawals/editbank?{$query}',
+        		success: function(msg) {
+        			if(msg.code == 200) {
+        				window.location.href = '/member/withdrawals/cash?{$query}';
+        				return false;
+        			} else {
+        				$("#msg").html("添加失败请重试");
+        				$(".bank_tip").show();
+                		$(".mask").show();
+                		return false;
+        			}
+        		}
+        	})
+        });
+    </script>
+</body>
+</html>
+

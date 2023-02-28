@@ -1,0 +1,144 @@
+
+body,html{ background-color: #f2f7f8; }
+body,html{  font-size:  62.5%%;/*10 ÷ 16 × 100% = 62.5%*/}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #999;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #999;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: #999;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #999;
+}
+
+.mui-icon-topic{ background: url(../img/tab/home-no@2x.png);}
+.mui-icon-job{ background: url(../img/tab/job-no@2x.png);}
+.mui-icon-my{ background: url(../img/tab/my-no@2x.png);}
+.mui-active .mui-icon-topic{ background: url(../img/tab/home@2x.png);}
+.mui-active .mui-icon-job{ background: url(../img/tab/job@2x.png);}
+.mui-active .mui-icon-my{ background: url(../img/tab/my@2x.png);}
+.mui-icon,.mui-active .mui-icon{ background-size:contain;}
+.mui-icon .mui-tab-label{color: #b3b3b3;}
+.mui-active .mui-tab-label{color: #333;}
+
+/* 话题 */
+.mui-scroll-wrapper { background: #fff;}
+.mui-segmented-control.mui-scroll-wrapper .mui-scroll{ width: 100%;}
+.mui-slider-indicator{font-size: 14px;}
+.mui-segmented-control.mui-scroll-wrapper,.mui-segmented-control.mui-scroll-wrapper{ height: 40px; font-size: 14px;}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item { color: #999;}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+	color: #00b359;
+}
+.mui-segmented-control.mui-scroll-wrapper .mui-control-item{
+	padding: 0px; margin: 0 3rem; border-bottom: 2px  solid #fff;box-sizing: border-box; margin-top: -2px;
+}
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+	border-bottom: 2px  solid #00b359; box-sizing: border-box;
+}
+.mui-segmented-control .mui-control-item{ line-height: 40px;}
+.main-bar { height: 15px;}
+.mui-fullscreen .mui-segmented-control~.mui-slider-group{ top:0rem; position: relative; height: 100%;}
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item{
+	border: none;
+}
+.mui-table-view-cell{ padding: 15px;}
+.mui-table-view-cell a .mui-media-object { width: 40px; height: 40px; border-radius: 100%; margin-right: 10px; } 
+.mui-media-body { color: #999;}
+.mui-media-body h5{ padding-bottom: 5px; margin: 0px;}
+.mui-navigate-con{}
+.mui-navigate-img ul{ margin-right: -10px; padding: 0px;}
+.mui-navigate-img li { margin-right: 10px; display: inline-block;}
+.mui-navigate-img li img{ width:50px; height: 30px;}
+.mui-table-view-cell>a:not(.mui-btn){ white-space:normal; padding: 0px;}
+.mui-table-view-cell>a:not(.mui-btn){ margin: 0px; display: block;}
+
+/*.grid {
+    display:-webkit-box;
+    vertical-align: top;
+}
+.grid:before,.grid:after {
+    content: " ";
+    display: table
+}
+.grid:after {
+    clear: both
+}
+.cos-1 {-webkit-box-flex:1;text-align:center;display:block}
+.cos-2 {-webkit-box-flex:2;text-align:center;display:block}
+.cos-3 {-webkit-box-flex:3;text-align:center;display:block}*/
+.pr{ position: relative;}
+.mui-navigate-con P{ padding: 15px 0; font-size: 14px; color: #333;}
+.mui-tab-new .mui-table-view-cell{ border-bottom: 1px solid #e5e5e5; padding: 15px 0px 25px 0;}
+.mui-tab-new li:last-child{ border:none}
+.mes-number { margin: 15px auto ; text-align: center; }
+.mes-number span{padding: 5px 2rem 5px 5px; background-color: #333; color: #fff; line-height: 25px;
+ height: 3.5rem; border-radius:2.5rem; display: inline-block;}
+.mes-number i { display: inline-block; vertical-align: middle; height: 2.5rem; width: 2.5rem; border-radius: 100% ; background-color: #fafafa; margin-right: 10px;}
+
+.mui-slider-indicator .mui-icon-write { background: url(../img/Release@2x.png) no-repeat 0px;
+	 background-size: 20px; border: none;
+    width: 20px;height: 20px;z-index: 100;    position: absolute;
+    top: 6px; right: 15px;}
+.mui-icon-back:before, .mui-icon-left-nav:before,.mui-navigate-right:after, .mui-push-right:after{ content: '';}
+
+#mack{ background: rgba(0,0,0,0.3); display: none; height: 100%; width: 100%; position:fixed; 
+top:0px; left: 0px; z-index: 99;}
+.mui-bufa { position: absolute; top:0px; left: 0px; z-index: 100; width: 100%;}
+.mui-bar-nav.mui-bar .mui-icon{ background-size: 14px; border: none;/*width: 2rem;height: 2rem;*/
+margin-left: 0px; margin-top: 10px;}
+.mui-bar .mui-icon-close { background: url(../img/enter/close@2x.png) no-repeat 0px;}
+.transformfY{ transform: translate3d(0,-100%,0); transition: transform 0.1s ease-in-out 0.4s;}
+.transformzY{ transform: translate3d(0,100%,0); transition: transform 0.1s ease-in-out 0.4s;}
+
+.mui-bufa { background: #fff;}
+.mui-bar{background: #fff; box-shadow: none; height: 44px; margin: 0px; padding: 0 15px;}
+.mui-tab-list {  padding: 12rem 0 3rem;}
+.mui-tab-list li span{ display: inline-block; width: 5rem; height: 5rem;}
+.mui-tab-list li a{ display: inline-block;}
+.mui-tab-list li .mui-icon-ht{ background: url(../img/huati@2x.png) no-repeat; background-size: contain;}
+.mui-tab-list li .mui-icon-sp{ background: url(../img/video@2x.png) no-repeat;background-size: contain;}
+.mui-tab-list li .mui-icon-work{ background: url(../img/recruit-t@2x.png) no-repeat; background-size: contain;}
+.mui-tab-list li .mui-icon-jobmy{ background: url(../img/Jobwanted@2x.png) no-repeat;background-size: contain;}
+.mui-tab-list li p{ line-height: 14px; font-size: 14px; color: #333;}
+.mui-tab-list ul{ padding: 0px;}
+
+
+.logo-mui-main { width: 60px; margin: 30px auto;}
+.bgff{ background: #fff;}
+.logo-mui-main img { width: 100%; background: #fff;}
+.mui-input-row label{ width: 22px; margin-right: 15px;}
+.mui-input-rowNum{ height: 60px; border-bottom: 1px solid #e5e5e5; margin: 0 15px; padding: 10px 0;}
+.mui-input-rowNum label{ height: 40px; width: 18px; margin-right: 15px; display: inline-block;}
+.mui-icon-phone{ background: url(../img/enter/phone@2x.png) no-repeat -4px 10px; background-size: 22px;}
+.mui-icon-password{ background: url(../img/enter/password@2x.png) no-repeat -3px 10px; background-size: 22px;}
+.mui-icon-yzm{background: url(../img/enter/yanzhenma@2x.png) no-repeat -1px 10px; background-size: 22px;}
+.mui-icon-phone:before{ content: '';}
+.mui-input-rowNum input[type=tel].jt-input,.mui-input-rowNum input[type=password].jt-input{
+	 height: 30px; line-height: 20px; padding: 5px 0; font-size: 14px; border: none;margin-top: -34px;   
+	  margin-top: -2px; display: none; margin-bottom: 0px;}
+
+.mui-tip{  display: block; color: #999; text-align: left; font-size: 14px; position: relative; 
+padding-top: 15px; }
+.magrinB50 { margin-bottom: 50px; }
+.mui-tip-tap{ margin-top: -15px;font-size: 10px; transition: margin-top 0.3s; text-align: left;}
+.mui-btn-block{ padding: 13px 0; border-radius: 8px; margin-bottom: 15px;}
+.link-area a{ color: #999; font-size: 10px;}
+.clear{ content: ''; clear: both;}
+.fl{ float: left;}
+.fr{ float: right;}
+.oauth-area { margin:0px}
+.mui-yzm-code { color: #00B359; font-size: 14px; position: absolute;top:10px; right: 0px; font-style: normal;}
+.color-green{ color: #00B359;  font-size: 12px;}
+.mui-table-view:before{ }
+.mui-table-view { padding: 0 15px; }
+.mui-scroll-wrapper { margin-bottom: 60px;}
+.mui-icon-back-enter{ background: url(../img/enter/back@2x.png) no-repeat center;}

@@ -1,0 +1,159 @@
+<extend name="./Public/Base.html"/>
+<block name='content'> 
+    <script src="__PUBLIC__/js/func.js" type="text/javascript"  rel="stylesheet"></script>
+
+            <ul>
+                <li>
+                    <div class="productPage">
+                        <div class="proPic" id='proPic'>
+                            <div class="countTime">
+                                <p>&nbsp<span  id="countTime0"></span></p>
+                            </div>
+                            <div class="proSurplus">
+                                <P>仅剩<span id="countSurplus0"></span>件</P>
+                            </div>
+							<div id="grad"></div> 
+                        </div>
+                        <div class="proTitle" id="proTitle">
+                            <h3>
+                                
+                            </h3>
+                        </div>
+                        <div class="proPrice">
+                            <span class="presentSign">¥</span>
+                            <span class="presentPrice" id="presentPrice"></span>
+                            <span class="usedSign">¥</span>
+                            <span class="usedPrice" id="usedPrice"></span>
+                            <!--<div class="lab-send"></div>-->
+                        </div>
+                    </div>
+                    <div class="whiteSpace30"></div>
+                </li>
+            </ul>
+            <div class="illDown">
+                <div class="illustration" id="illustration">
+                    
+                </div>
+                <!--<div class="illPic" id="illPic"></div>-->
+                <div class="whiteSpace"></div>
+            </div>
+            <div class="btn-buy container" style="padding: 0;">
+                <div class="btn-addToCart col-xs-6" id="addCart">
+                    加入购物车
+                </div>
+                <div class="btn-buyNow col-xs-6" id="gopay" onclick="">
+                    立即购买
+                </div>
+            </div>
+            <div class="cart back_mg" onclick="go_cart()">
+                <p class="cartNum"></p>
+            </div>
+            <input type="hidden" id="id"/>
+
+    <script>
+        var id = {:intval($_GET['id'])};
+        $('#id').val(id);
+        func.getDetail();func.initCart();
+    </script>
+    
+    <style>
+        .illPic{
+            background-size: cover;
+            width: 690px;
+            height: 388px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+	<div class="spinner">
+		<div class="dot1"></div>
+		<div class="dot2"></div>
+	</div>
+	<div class="topMask" style="opacity: .6;"></div>
+        <div class="topM">
+            <div class="btn-download">
+                <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.beabox.hjy.tt">立即下载</a>
+            </div>
+            <p class="closeTop">X</p>
+            <p class="downloadText">
+                下载肌肤管家APP<br>
+                即可一元抢购
+            </p>
+        </div>
+	<script>
+		$(".closeTop").click(function(){
+			$(".topM").css("visibility","hidden");
+			$(".topMask").css("visibility","hidden");
+		})
+		var sessionCartList = eval({:json_encode(session('cartList'))});
+		var cartid = {$_GET['id']};
+	</script>
+	<if condition="is_weixin()">
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+			wx.config({
+				appId: '{$ticket[appid]}', // 必填，公众号的唯一标识
+				timestamp: {$ticket[timestamp]}, // 必填，生成签名的时间戳
+				nonceStr: '{$ticket[noncestr]}', // 必填，生成签名的随机串
+				signature: '{$ticket[signature]}',// 必填，签名，见附录1
+				jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+			});
+			wx.ready(function () {
+				wx.onMenuShareTimeline({
+					title: '{$desc}', // 分享标题
+					link: '{WEB_URL}', // 分享链接
+					imgUrl: '{WEB_URL}Public/imgs/share.png', // 分享图标
+					success: function () { 
+						// 用户确认分享后执行的回调函数
+						return false;
+					},
+					cancel: function () { 
+						// 用户取消分享后执行的回调函数
+					}
+				});
+				wx.onMenuShareAppMessage({
+					title: '{$title}', // 分享标题
+					desc: '{$desc}', // 分享描述
+					link: '{WEB_URL}', // 分享链接
+					imgUrl: '{WEB_URL}Public/imgs/share.png', // 分享图标
+					type: '', // 分享类型,music、video或link，不填默认为link
+					dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+					success: function () { 
+						// 用户确认分享后执行的回调函数
+						return false;
+					},
+					cancel: function () { 
+						// 用户取消分享后执行的回调函数
+					}
+				});
+				wx.onMenuShareQQ({
+					title: '{$title}', // 分享标题
+					desc: '{$desc}', // 分享描述
+					link: '{WEB_URL}', // 分享链接
+					imgUrl: '{WEB_URL}Public/imgs/share.png', // 分享图标
+					success: function () { 
+					   // 用户确认分享后执行的回调函数
+					  return false;
+					},
+					cancel: function () { 
+					   // 用户取消分享后执行的回调函数
+					}
+				});
+				wx.onMenuShareWeibo({
+					title: '{$title}', // 分享标题
+					desc: '{$desc}', // 分享描述
+					link: '{WEB_URL}', // 分享链接
+					imgUrl: '{WEB_URL}Public/imgs/share.png', // 分享图标
+					success: function () { 
+					   // 用户确认分享后执行的回调函数
+					   return false;
+					},
+					cancel: function () { 
+						// 用户取消分享后执行的回调函数
+					}
+				});
+			  });
+		</script>
+	</if>
+</block>
